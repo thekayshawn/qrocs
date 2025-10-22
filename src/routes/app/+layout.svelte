@@ -1,9 +1,16 @@
 <script lang="ts">
-	import { PUBLIC_CONVEX_URL } from '$env/static/public';
-	import { setupConvex } from 'convex-svelte';
+	import { goto } from '$app/navigation';
+	import usersStore from '../../features/users/users.store.svelte';
 
 	const { children } = $props();
-	setupConvex(PUBLIC_CONVEX_URL);
+
+	// Check authentication on mount
+	$effect(() => {
+		// TODO: Implement actual authentication check with Convex
+		if (!usersStore.user) {
+			goto('/signin');
+		}
+	});
 </script>
 
 {@render children()}
